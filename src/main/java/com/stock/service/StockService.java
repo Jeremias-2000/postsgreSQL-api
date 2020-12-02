@@ -1,0 +1,52 @@
+package com.stock.service;
+
+import com.stock.model.Stock;
+import com.stock.repository.StockRepository;
+import javassist.NotFoundException;
+import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class StockService {
+    @Autowired
+    private StockRepository stockRepository;
+
+    public List<Stock> getAll(){
+        return stockRepository.findAll();
+    }
+
+    @SneakyThrows
+    public Stock getById(long id)  {
+        return validStockById(id);
+    }
+
+    public Stock save(Stock stock){
+        return stockRepository.save(stock);
+    }
+
+    @SneakyThrows
+    public Stock update(long id, Stock stock)  {
+        Stock validStock = validStockById(id);
+        validStock.setDescription(stock.getDescription());
+        validStock.setPurcharsePrice(stock.getPurcharsePrice());
+        validStock.setSalePrice(stock.getSalePrice());
+        validStock.setPurcharseDate(stock.getPurcharseDate());
+        validStock.setLot(stock.getLot());
+
+        return validStock;
+    }
+
+    @SneakyThrows
+    public void delete(long id){
+       Stock validStock =  validStockById(id);
+        stockRepository.delete(validStock);
+    }
+
+    protected Stock validStockById(long id) throws NotFoundException {
+        return   stockRepository.findById(id).orElseThrow(()
+                 -> new NotFoundException("Invalid id" + id));
+    }
+}
