@@ -14,6 +14,10 @@ public class StockService {
     @Autowired
     private StockRepository stockRepository;
 
+    public StockService(StockRepository stockRepository) {
+        this.stockRepository = stockRepository;
+    }
+
     public List<Stock> getAll(){
         return stockRepository.findAll();
     }
@@ -31,9 +35,9 @@ public class StockService {
     public Stock update(long id, Stock stock)  {
         Stock validStock = validStockById(id);
         validStock.setDescription(stock.getDescription());
-        validStock.setPurcharsePrice(stock.getPurcharsePrice());
-        validStock.setSalePrice(stock.getSalePrice());
-        validStock.setPurcharseDate(stock.getPurcharseDate());
+        validStock.setPrice(stock.getPrice());
+        validStock.setSale_price(stock.getSale_price());
+        validStock.setPurcharse_date(stock.getPurcharse_date());
         validStock.setLot(stock.getLot());
 
         return validStock;
@@ -49,4 +53,14 @@ public class StockService {
         return   stockRepository.findById(id).orElseThrow(()
                  -> new NotFoundException("Invalid id" + id));
     }
+//    public boolean valisData(String data) {
+//        try {
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyy");
+//            sdf.setLenient(false);
+//            sdf.parse(data);
+//            return true;
+//        } catch (ParseException ex) {
+//            return false;
+//        }
+//    }
 }

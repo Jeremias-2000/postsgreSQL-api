@@ -14,6 +14,10 @@ public class StockController implements AbstractController{
     @Autowired
     private StockService stockService;
 
+    public StockController(StockService stockService) {
+        this.stockService = stockService;
+    }
+
     @Override
     public ResponseEntity<?> getAllStock() {
         return new ResponseEntity<>(stockService.getAll(), HttpStatus.OK);

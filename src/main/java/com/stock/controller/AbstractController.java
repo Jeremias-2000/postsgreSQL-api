@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public interface AbstractController {
-    @GetMapping("/allStock")
+    @GetMapping("/all")
     ResponseEntity<?> getAllStock();
 
     @GetMapping("/search/{id}")
     ResponseEntity<?> getStockById(@PathVariable("id") long id);
 
-    @PostMapping("/saveStock")
+    @PostMapping("/save")
     ResponseEntity<?> saveStock(@RequestBody Stock stock);
 }
