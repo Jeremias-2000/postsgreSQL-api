@@ -2,10 +2,8 @@ package com.stock.controller;
 
 import com.stock.model.Stock;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 public interface AbstractController {
     @GetMapping("/all")
@@ -16,4 +14,10 @@ public interface AbstractController {
 
     @PostMapping("/save")
     ResponseEntity<?> saveStock(@RequestBody Stock stock);
+
+    @PutMapping("/update/{id}")
+    ResponseEntity<?> updateStock(@PathVariable("id") long id, @Validated @RequestBody Stock stock);
+
+    @DeleteMapping("/delete/{id}")
+    ResponseEntity<?> deleteStock(@PathVariable("id") long id);
 }
