@@ -19,4 +19,6 @@ public class Customer {
     private String cpf;
     private String address;
     private String contact;
+    private String email;
+    private String password;
 }

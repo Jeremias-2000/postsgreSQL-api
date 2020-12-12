@@ -3,6 +3,7 @@ package com.stock.controller;
 import com.stock.model.Stock;
 import com.stock.service.impl.ImplStockService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,7 @@ public class StockController implements AbstractController{
     @Override
     public ResponseEntity<?> saveStock(Stock stock) {
         Stock save = implStockService.save(stock);
-        return ResponseEntity.ok(save);
+        return new ResponseEntity<>(save, HttpStatus.CREATED);
     }
 
     @Override
