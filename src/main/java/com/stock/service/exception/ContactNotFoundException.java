@@ -1,9 +1,10 @@
 package com.stock.service.exception;
 
-public class UniqueCpfException extends Exception {
+public class ContactNotFoundException extends Exception {
     private static final long serialVersionUID = 1L;
 
-    public UniqueCpfException(String message) {
+    public ContactNotFoundException(String message) {
         super(message);
     }
+
 }
