@@ -3,9 +3,9 @@ package com.stock.service.impl;
 import com.stock.model.Customer;
 import com.stock.repository.CustomerRepository;
 import com.stock.service.CustomerService;
-import com.stock.service.exception.ContactNotFoundException;
-import com.stock.service.exception.UniqueContactException;
-import com.stock.service.exception.UniqueCpfException;
+import com.stock.service.exception.*;
+import javassist.NotFoundException;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,8 +37,8 @@ public class ImplCustomerService implements CustomerService<Customer> {
     }
 
     @Override
-    public Optional<Customer> findCustomerBYCPF(String cpf) {
-        return null;
+    public Optional<Customer> findCustomerBYCPF(String cpf) throws NotFoundException {
+        return customerRepository.findByCpf(cpf);
     }
 
     @Override
@@ -69,13 +69,22 @@ public class ImplCustomerService implements CustomerService<Customer> {
 
 
     @Override
-    public Customer update(long id ,Customer updateCustomer) {
-        return null;
+    public Customer update(long id ,Customer updateCustomer) throws UpdateCustomerException {
+        Customer search = customerRepository.findById(id).orElseThrow(()->
+                new UpdateCustomerException("Impossivel atualizar cliente" + id));
+        search.setName(updateCustomer.getName());
+        search.setCpf(updateCustomer.getCpf());
+        search.setAddress(updateCustomer.getAddress());
+        search.setEmail(updateCustomer.getEmail());
+        search.setPassword(updateCustomer.getPassword());
+        return search;
     }
 
+
     @Override
-    public void delete(long id) {
-        Customer deleteCustomer = customerRepository.findById(id).orElse(null);
+    public void delete(long id) throws DeleteCustomerException {
+        Customer deleteCustomer = customerRepository.findById(id).orElseThrow(() ->
+                new DeleteCustomerException("Impossivel deletar cliente com id :" + id));
         customerRepository.delete(deleteCustomer);
     }
 }

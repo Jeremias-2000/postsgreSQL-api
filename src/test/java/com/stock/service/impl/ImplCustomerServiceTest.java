@@ -2,8 +2,11 @@ package com.stock.service.impl;
 
 import com.stock.model.Customer;
 import com.stock.repository.CustomerRepository;
+import com.stock.service.exception.DeleteCustomerException;
 import com.stock.service.exception.UniqueContactException;
 import com.stock.service.exception.UniqueCpfException;
+import com.stock.service.exception.UpdateCustomerException;
+import javassist.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,14 +15,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static java.util.Optional.*;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -67,6 +70,16 @@ class ImplCustomerServiceTest {
     }
 
     @Test
+    @DisplayName("find by cpf")
+    void findByCpf() throws NotFoundException {
+        when(customerRepository.findByCpf(CPF)).thenReturn(ofNullable(customer));
+        Optional<Customer> search = service.findCustomerBYCPF(CPF);
+        assertThat(search).isNotNull();
+        assertEquals(search, ofNullable(customer));
+        verify(customerRepository).findByCpf(CPF);
+    }
+
+    @Test
     @DisplayName("save customer")
     void should_save_in_repository() throws UniqueCpfException, UniqueContactException {
         service.save(customer);
@@ -84,19 +97,29 @@ class ImplCustomerServiceTest {
     }
 
     @Test
+    @DisplayName("Test Contacts exception")
     void should_not_save_equal_contacts() throws Exception, UniqueCpfException {
-
+    when(customerRepository.findByContact(CONTACT)).thenReturn(ofNullable(customer));
+        assertThrows(UniqueContactException.class, () -> service.save(customer));
     }
 
     @Test
     @DisplayName("update customer")
-    void update() {
+    void update() throws UpdateCustomerException {
+        when(customerRepository.findById(ID))
+                 .thenReturn(ofNullable(customer));
+
         service.update(ID,customer);
     }
 
     @Test
     @DisplayName("delete customer")
-    void delete() {
+    void delete() throws DeleteCustomerException {
+        when(customerRepository.findById(ID))
+                .thenReturn(ofNullable(customer));
+
+       service.delete(ID);
+
     }
 
 
