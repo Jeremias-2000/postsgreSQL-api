@@ -1,10 +1,10 @@
 package com.stock.service;
 
 import com.stock.model.Customer;
-import com.stock.service.exception.DeleteCustomerException;
-import com.stock.service.exception.UniqueContactException;
-import com.stock.service.exception.UniqueCpfException;
-import com.stock.service.exception.UpdateCustomerException;
+import com.stock.service.exceptionService.DeleteCustomerException;
+import com.stock.service.exceptionService.UniqueContactException;
+import com.stock.service.exceptionService.UniqueCpfException;
+import com.stock.service.exceptionService.UpdateCustomerException;
 import javassist.NotFoundException;
 
 import java.util.List;

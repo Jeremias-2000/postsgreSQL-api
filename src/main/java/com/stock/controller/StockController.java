@@ -1,8 +1,8 @@
 package com.stock.controller;
 
 import com.stock.model.Stock;
-import com.stock.service.exception.LotNotFoundException;
-import com.stock.service.exception.UniqueLotException;
+import com.stock.service.exceptionService.LotNotFoundException;
+import com.stock.service.exceptionService.UniqueLotException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

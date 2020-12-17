@@ -1,4 +1,4 @@
-package com.stock.service.exception;
+package com.stock.service.exceptionService;
 
 public class ContactNotFoundException extends Exception {
     private static final long serialVersionUID = 1L;

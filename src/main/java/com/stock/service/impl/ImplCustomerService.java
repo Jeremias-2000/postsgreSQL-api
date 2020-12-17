@@ -3,9 +3,8 @@ package com.stock.service.impl;
 import com.stock.model.Customer;
 import com.stock.repository.CustomerRepository;
 import com.stock.service.CustomerService;
-import com.stock.service.exception.*;
+import com.stock.service.exceptionService.*;
 import javassist.NotFoundException;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
